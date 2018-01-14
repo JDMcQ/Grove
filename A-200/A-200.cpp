@@ -3,6 +3,7 @@
 #include <SPI.h>
 #include <Ethernet.h>
 #include <DHT.h>
+#include <Adafruit_Sensor.h>
 #include <MQTTClient.h>
 
 //-------DHT---------
@@ -112,6 +113,14 @@ void loop() {
      //float t = dht.readTemperature();
      // Read temperature as Fahrenheit (isFahrenheit = true)
      DT_202 = DHT_201.readTemperature(true);
+
+     Serial.print("Temperature: ");
+     Serial.println(DT_202);
+     Serial.print("Humidity: ");
+     Serial.println(DH_202);
+
+     delay(2000);
+
 
 
 }
