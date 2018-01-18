@@ -47,7 +47,7 @@ void loop() {
 
 	reading = analogRead(TT_201_Pin);
 	TT_201 = reading / 9.31;
-	int retcode = sprintf(DT_202_str, "%f",TT_201);
+//	int retcode = sprintf(DT_202_str, " Formatted Value: %6.4f",TT_201);
  //    delay(2000);
 
      DH_202 = DHT_201.readHumidity();
@@ -55,9 +55,11 @@ void loop() {
      //float t = dht.readTemperature();
      // Read temperature as Fahrenheit (isFahrenheit = true)
      DT_202 = DHT_201.readTemperature(true);
+     dtostrf(TT_201,8,4,DT_202_str);
+     //int retcode = sprintf(DT_202_str, ": %6.4f",DT_202);
      Serial.print("New Series: \n\r");
      Serial.print("Formatted Temp: ");
-     Serial.print(DT_202_str); Serial.print("   Code: "); Serial.print(retcode);
+     Serial.print(DT_202_str); Serial.print("   Code: "); //Serial.print(retcode);
      Serial.print("\n\r");
      Serial.print("\n\r");
      Serial.print("Analog Temp: ");
