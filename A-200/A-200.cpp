@@ -5,6 +5,7 @@
 #include <Adafruit_Sensor.h>
 #include <MQTTClient.h>
 
+
 //-------DHT---------
 #define DHTTYPE DHT11   // DHT 11
 #define DHTPIN 2     // what digital pin we're connected to
@@ -24,11 +25,37 @@ int reading;
 int TT_201_Pin = 1;
 float TT_201;
 
+
 // ----------------------   Ethernet setup ----------------
 byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED};
 IPAddress ip(192, 168, 1, 52);
 IPAddress server(192, 168, 1, 50); //MQTT 'Broker'
 //EthernetServer Webserver(80);
+
+EthernetClient net;
+
+// MQTT
+MQTTClient client;
+unsigned long lastMillis = 0;
+
+
+void connect() {
+  Serial.print("connecting...");
+  while (!client.connect("arduino", "try", "try")) {
+    Serial.print(".");
+    delay(1000);
+  }
+
+  Serial.println("\nconnected!");
+
+  client.subscribe("/hello");
+  // client.unsubscribe("/hello");
+}
+
+
+void messageReceived(String &topic, String &payload) {
+  Serial.println("incoming: " + topic + " - " + payload);
+}
 
 
 void setup() {
@@ -39,11 +66,23 @@ void setup() {
       ; // wait for serial port to connect. Needed for native USB port only
     }
 
+    Ethernet.begin(mac, ip);
+    client.begin("192.168.1.50:1883", net);
+    client.onMessage(messageReceived);
+
+    connect();
+
 }
 
 int n = 0;
 
 void loop() {
+
+	client.loop();
+
+	if (!client.connected()) {
+	  connect();
+	}
 
 	reading = analogRead(TT_201_Pin);
 	TT_201 = reading / 9.31;
@@ -73,5 +112,11 @@ void loop() {
      Serial.print("\n\r");
      Serial.print("\n\r");
      delay(2000);
+
+     // publish a message roughly every second.
+     if (millis() - lastMillis > 1000) {
+       lastMillis = millis();
+       client.publish("/hello", "world");
+     }
 
 }
