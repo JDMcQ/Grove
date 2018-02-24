@@ -192,10 +192,6 @@ void loop() {
 
 
 
-
-
-
-
   delay(3000);
 
   // publish a message roughly every second.
