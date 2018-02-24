@@ -11,19 +11,19 @@ SimpleDHT11 dht11;
 
 float DT_202;
 float DH_202;
-char  *DT_202_str = "Place holder";
-char  *DH_202_str = "Place holder";
+char  *DT_202_str = "DT_202_str";
+char  *DH_202_str = "DH_202_str";
 
 //------- PIR ------------
 #define PIR_203_PIN 5
 int PIR_203 = 0;
-char  *PIR_203_str = "Place holder";
+char  *PIR_203_str = "PIR_203_str";
 
 //------- Analog Pins --------
 int reading;
 int TT_201_Pin = 1;
 float TT_201;
-char  *TT_201_str = "Place holder";
+char  *TT_201_str = "TT_201_str";
 
 
 
