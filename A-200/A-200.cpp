@@ -4,6 +4,8 @@
 #include <MQTTClient.h>
 #include <SimpleDHT.h>
 
+#include <LM35.h>
+
 
 //-------DHT---------
 #define DHTPIN 2     // what digital pin we're connected to
@@ -20,9 +22,11 @@ int PIR_203 = 0;
 char  *PIR_203_str = "PIR_203_str";
 
 //------- Analog Pins --------
-int reading;
 int TT_201_Pin = 1;
-float TT_201;
+LM35 TT_201(TT_201_Pin);
+//int reading;
+//int TT_201_Pin = 1;
+//float TT_201;
 char  *TT_201_str = "TT_201_str";
 
 
@@ -118,12 +122,13 @@ void loop() {
 
 // -------------- TT_201 -------------------------------------------------------
 
-  reading = analogRead(TT_201_Pin);
-  TT_201 = reading / 9.31;
-  Serial.print(TT_201); Serial.println(" *F Analog\r");
+//  reading = analogRead(TT_201_Pin);
+//  TT_201 = reading / 9.31;
+  TT_201.getT();
+  Serial.print(TT_201.Value); Serial.println(" *F Analog\r");
 
-  dtostrf(TT_201,8,4,TT_201_str);
-  Serial.print("An Temp:  "); Serial.print(DT_202_str); Serial.println( " *F Analog\r");
+//  dtostrf(TT_201,8,4,TT_201_str);
+  Serial.print("An Temp:  "); Serial.print(TT_201.strValue); Serial.println( " *F Analog\r");
 
 // ----------------------------------------------------------------------------------
 
@@ -163,7 +168,7 @@ void loop() {
           client.println();
           client.println("<!DOCTYPE HTML>");
           client.println("<html>");
-          client.print("<p> Temperature, TT_201: ");client.print(TT_201_str);client.println(" deg F </p>");
+          client.print("<p> Temperature, TT_201: ");client.print(TT_201.strValue);client.println(" deg F </p>");
           client.print("<p> Temperature, DT_202: ");client.print(DT_202_str);client.println(" deg F </p>");
           client.print("<p> Temperature, DH_202: ");client.print(DH_202_str);client.println(" % H </p>");
           client.print("<p> Activity, PIR_203: ");client.print(PIR_203_str);client.println(" Boolean </p>");
