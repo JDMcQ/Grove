@@ -1,7 +1,7 @@
 // Analog Temperature Object
 // JDM 2018
-#ifndef ATemp
-#define ATemp
+#ifndef LM35_H
+#define LM35_H
 
 class LM35{
 	public:
@@ -9,14 +9,15 @@ class LM35{
 		char  *strValue;
 	
 	private: 
-		float smooth [10];
+		float smooth [16];
 		int signal;
 		float iTemp;
 		int idx;
 		int apin;
 		float sum;
 		
-	public: LM35(int pin,);
+	public: LM35(int pin);
 	
 	public: void getT();
 };
+#endif

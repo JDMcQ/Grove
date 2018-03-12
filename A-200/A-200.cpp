@@ -4,7 +4,7 @@
 #include <MQTTClient.h>
 #include <SimpleDHT.h>
 
-#include <LM35.h>
+#include "LM35.h"
 
 
 //-------DHT---------

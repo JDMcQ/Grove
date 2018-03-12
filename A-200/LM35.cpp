@@ -22,17 +22,17 @@ LM35::LM35(int pin){
 void LM35::getT(){
 	signal = analogRead(apin);
 
-	smooth(idx) = signal / 9.31;
+	smooth[idx] = signal / 9.31;
 
 	idx++;
-	if (idx >=9 )
+	if (idx >=15 )
 		idx = 0;
 
 	sum = 0.0;
-	for (int i = 0; i<10; i++){
-		sum = sum + smooth(idx);
+	for (int i = 0; i<16; i++){
+		sum = sum + smooth[idx];
 	}
-    iTemp = sum/10;
+    iTemp = sum/16;
 
     Value = iTemp;
     dtostrf(Value,6,3,strValue);
