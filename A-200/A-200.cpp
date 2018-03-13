@@ -5,7 +5,8 @@
 #include <SimpleDHT.h>
 
 #include "LM35.h"
-
+#include "PIR.h"
+#include "CR.h"
 
 //-------DHT---------
 #define DHTPIN 2     // what digital pin we're connected to
@@ -28,7 +29,6 @@ LM35 TT_201(TT_201_Pin);
 //int TT_201_Pin = 1;
 //float TT_201;
 char  *TT_201_str = "TT_201_str";
-
 
 
 // ----------------------   Ethernet setup ----------------
